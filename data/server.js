@@ -1,5 +1,6 @@
 
 var poost = require("./repository");
+var storage = require('./s3');
 
 var express = require("express");
 var app = express();
@@ -7,14 +8,19 @@ var app = express();
 app.get('/poost/it',function(req,res){
 	
 	poost.it('teste','teste de bosta',function(err,id){
-		res.send("<h1>Err:" + err + "</h1> </br> <h2>" + id + "</h2>");		
+		
+		storage.save(id.toString(),,function(err,data){
+			
+			res.send("<h1>Err:" + err + "</h1> </br> <h2>" + data[0] + "</h2>");		
+		
+		});
 	});
 
 });
 
 app.get('/poost/list',function(req,res){
 	
-	poost.get(20,0,function(err,data){
+	poost.get(11102012,20,0,function(err,data){
 	
 		var response = "";
 		

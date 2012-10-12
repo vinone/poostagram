@@ -42,16 +42,20 @@ var poost = (function(){
 				});			
 			});
 		},
-		get:function(count,currentCount,callback){
+		get:function(day,count,currentCount,callback){
 			
-			var id = getCurrentId();
+			
+			
+			if(day===null){
+				day = getCurrentId();
+			};
 			
 			db
 			.get(tableName)
-			.query({poostDay:id},{ 
+			.query({poostDay:day, 
 				poostSequence:{
-					'>=':count
-					} 
+					'>=':[currentCount,(currentCount+count)]
+					}
 				})
 			.get('poostDay','poostSequence','artist','masterPiece','date')
 			.fetch(function(err,data){
