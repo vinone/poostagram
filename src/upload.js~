@@ -1,0 +1,64 @@
+	var express = require('express');
+	var storage = require('./s3');
+	var fs = require('fs');
+	var app = express();
+	var poost = require('./repository');
+	app.use(express.bodyParser({uploadDir:'./temp_poo'}));
+	
+	app.get('/index',function(req,res){
+		res.send("<h1>Poost It</h1>");
+	});
+
+	app.get('/upload',function(req,res){
+		res.writeHead(200,{"Content-Type":"text/html"});
+		res.write('<form action="/upload" method="post" enctype="multipart/form-data">' +
+			'<input type="text" name="artist">' +
+			'<input type="text" name="masterpiece">' +
+			'<input type="file" name="maybeAPooImage">' +
+			'<input type="submit" value="Poost It!">' +
+			'</form>');
+		res.end();
+	});
+
+	app.post('/upload',function(req,res,next){
+		
+		if(req.files.maybeAPooImage.size > 700000){ 
+			res.set('Content-Type','text/html');
+			res.send(400,'<h1>Ooops, file too big! Help us, poost a image less than 700000kb</h1>');
+		}
+		else{	
+				fs.readFile(req.files.maybeAPooImage.path,function(error,bufferData){
+
+					var buffer = new Buffer(bufferData);
+					poost.it(req.body.artist,req.body.masterpiece,function(ex,id){
+						console.log(id);
+					
+						storage.save(id.toString(),buffer,function(err,data){
+							res.set('Content-Type','text/html');
+							res.send(200,'<h1>Shit happens ..</h1>');
+						});
+					});
+				});
+		}
+		
+		var tempPath = req.files.maybeAPooImage.path;
+		fs.unlink(tempPath, function(err) {
+			if (err) throw err;
+		});
+	});
+
+	app.listen(8080);
+		
+	function newGuid(){
+		var random = function(){
+			return Math.floor(Math.random() * 0x10000).toString(16);
+		};
+		
+		return (random() + random() + "-" + 
+			random() + "-" + random() + "-" + 
+			random() + "-" + random() + 
+			random() + random());
+	}
+
+
+
