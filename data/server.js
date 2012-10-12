@@ -9,7 +9,7 @@ app.get('/poost/it',function(req,res){
 	
 	poost.it('teste','teste de bosta',function(err,id){
 		
-		storage.save(id.toString(),,function(err,data){
+		storage.save(id.toString(),'s',function(err,data){
 			
 			res.send("<h1>Err:" + err + "</h1> </br> <h2>" + data[0] + "</h2>");		
 		

@@ -17,7 +17,8 @@ var storage = (function(){
 		save:function(id,buffer,callback){
 			
 			var headers = {
-			  'Content-Type': 'image/jpg'
+			  'Content-Type': 'image/jpg',
+			  'x-amz-acl' :'public-read'
 			};
 			
 			client.putBuffer(buffer, id+'.jpg', headers, function(err, res){
