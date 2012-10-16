@@ -5,22 +5,10 @@
 	var poost = require('./repository');
 	app.use(express.bodyParser({uploadDir:'./temp_poo'}));
 	
-	app.get('/index',function(req,res){
-		res.send("<h1>Poost It</h1>");
+	app.get('/',function(req,res){
+		res.render("index.html");
 	});
 
-	app.get('/upload',function(req,res){
-		res.writeHead(200,{"Content-Type":"text/html"});
-		res.write('<form action="/upload" method="post" enctype="multipart/form-data">' +
-			'<input type="text" name="artist">' +
-			'<input type="text" name="masterpiece">' +
-			'<input type="file" name="maybeAPooImage">' +
-			'<input type="submit" value="Poost It!">' +
-			'</form>' + 
-			'<a href="/list/">list all</a>');
-		res.end();
-	});
-	
 	app.get('/list',function(req,res){
 		poost.get(12102012,20,0,function(err,data){
 	
@@ -60,5 +48,4 @@
 			if (err) throw err;
 		});
 	});
-
-	app.listen(8080);
+	app.listen(80);
