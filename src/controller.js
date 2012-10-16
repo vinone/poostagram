@@ -9,8 +9,8 @@
 		res.render("index.html");
 	});
 
-	app.get('/list',function(req,res){
-		poost.get(12102012,20,0,function(err,data){
+	app.get('/list/{poostDay}/{poostSequence}',function(req,res){
+		poost.get(req.poostDay,20,req.poostSequence,function(err,data){
 	
 			var response = new Array();
 			
@@ -20,7 +20,9 @@
 
 				response.push({url: '<img src="https://s3.amazonaws.com/poostes/' + id + '"',
 						artist: poost.artist,
-						masterpiece: poost.masterPiece});		
+						masterpiece: poost.masterPiece,
+						poostDay:poost.poostDay.toString(),
+						poostSequence:poost.poostDay.toString()});		
 			};
 
 			res.json(response);
