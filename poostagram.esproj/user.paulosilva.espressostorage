@@ -20,10 +20,7 @@
 	<key>com.macrabbit.Espresso.FileManager.FileControllerState</key>
 	<dict>
 		<key>ExpandedURLs</key>
-		<array>
-			<string>file://localhost/Users/paulosilva/Projects/poostagram/node_modules/knox</string>
-			<string>file://localhost/Users/paulosilva/Projects/poostagram/src/server</string>
-		</array>
+		<array/>
 	</dict>
 	<key>com.macrabbit.Espresso.Publisher.DisclosureCollapsed</key>
 	<false/>
@@ -46,6 +43,12 @@
 			<dict>
 				<key>DocumentURL</key>
 				<string>file://localhost/Users/paulosilva/Projects/poostagram/user.paulosilva.espressostorage</string>
+				<key>StateType</key>
+				<string>DefaultTab</string>
+			</dict>
+			<dict>
+				<key>DocumentURL</key>
+				<string>file://localhost/Users/paulosilva/Projects/poostagram/Project.espressostorage</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
