@@ -79,8 +79,6 @@ function loadMorePoos(){
 
 
 
-
-
 $(document).ready(function(){	
 	
 	$('#load-more').click(function(){
@@ -89,6 +87,15 @@ $(document).ready(function(){
 	
 	$('.photo img:not(resized)').each(function() {
 	    $(this).resizeImage();
+	});
+	
+	
+	$('#input-right').click(function(){
+	
+		$('#upload-form').post('upload', function(data) {
+		  alert('Sua obra foi poostada!');
+		});
+	
 	});
 
 
