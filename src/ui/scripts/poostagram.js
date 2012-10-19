@@ -92,7 +92,11 @@ $(document).ready(function(){
 	
 	$('#input-right').click(function(){
 	
-		$('#upload-form').post('upload', function(data) {
+		$.post('upload', { 
+					artist: $('input[name="artist"]').val(), 
+					masterpiece: $('input[name="masterpiece"]').val(),
+					poo: $('input[name="poo"]').val()
+					}, function(data) {
 		  alert('Sua obra foi poostada!');
 		});
 	
