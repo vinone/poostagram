@@ -90,7 +90,7 @@ body{
 }
 
 .photo:hover .photo-buttons{
-	display: block;
+/*	display: block;*/
 }
 
 .photo-buttons{
