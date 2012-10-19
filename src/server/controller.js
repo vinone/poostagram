@@ -6,7 +6,7 @@
 	var app = express();
 
 	var poost = require('./repository');
-	app.use(express.bodyParser({uploadDir:'./temp_poo'}));
+	app.use(express.bodyParser({uploadDir:'../ui'}));
 
 
 	app.engine('.html', require('jade').renderFile);
@@ -60,5 +60,5 @@
 			if (err) throw err;
 		});
 	});
-	app.listen(801);
+	app.listen(80);
 
