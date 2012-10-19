@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+<title>Poostagram BETA</title>
+
+
+<link href="css/poostagram.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+
+	<div id="header"> 
+		<div id="logo" alt="Poostagram" title="'cause shit happens"></div>
+		<form id="upload-form">
+		 <p>Orgulhoso da sua criação?</p>
+		
+        	<div id="input-left">
+			<input type="text" name="titulodaobra" onclick="this.value=='Titulo da obra'?this.value='':this.value==this.value;"  onfocus="this.select()" onblur="this.value=!this.value?'Titulo da obra':this.value;" value="Titulo da obra"/>
+			<input type="text" name="nomedoartista" onclick="this.value=='Nome do artista'?this.value='':this.value==this.value;"  onfocus="this.select()" onblur="this.value=!this.value?'Nome do artista':this.value;" value="Nome do artista"/>
+			<input type="file" class="file" name="nomedoarquivo" /> 
+			</div><!--input-left-->
+            
+            <div id="input-right"><input type="submit"  class="button"  value=""/></div>
+					
+		</form>
+		
+	<!--	<center>
+		<div id="paper" style="height:300px;width: 500px;display: block;background-image: url(toilet-paper.png);">
+			hello toilet
+			<br />
+			Poostagram
+			<br />
+			<a href="#" id="output"></a>
+		</div>
+		</center>
+		-->
+		
+	
+	
+	</div>
+
+	
+	<div id="content"> 
+	
+	<div id="top" style="height:220px;"></div>
+        
+	<ul id="toilet-paper">
+		<li>
+			<div class="paper-piece">
+				<h1>Titulo da obra</h1>
+				<h2>Autor da obra</h2>
+				<div class="photo">
+					<img src="images/poos/a.jpg" />
+					<div class="photo-buttons">
+					<ul>
+						<li>
+							<a href="#">Não é cocô!</a>
+						</li>
+						<li>
+							<a href="#">Denúncia!</a>
+						</li>
+					</ul>
+					</div>
+				</div>
+				
+			</div>
+		</li>
+		<li>
+			<div class="paper-piece">
+				<h1>Titulo da obra</h1>
+				<h2>Autor da obra</h2>
+				<div class="photo">
+					<img src="images/poos/b.jpg" />
+					<div class="photo-buttons">
+					<ul>
+						<li>
+							<a href="#">Não é cocô!</a>
+						</li>
+						<li>
+							<a href="#">Denúncia!</a>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="paper-piece">
+				<h1>Titulo da obra</h1>
+				<h2>Autor da obra</h2>
+				<div class="photo">
+					<img src="images/poos/c.jpg" />
+					<div class="photo-buttons">
+					<ul>
+						<li>
+							<a href="#">Não é cocô!</a>
+						</li>
+						<li>
+							<a href="#">Denúncia!</a>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</div>
+			</li>
+			<li>
+			<div class="paper-piece">
+				<h1>Titulo da obra</h1>
+				<h2>Autor da obra</h2>
+				<div class="photo">
+					<img src="images/poos/d.jpg" />
+					<div class="photo-buttons">
+					<ul>
+						<li>
+							<a href="#">Não é cocô!</a>
+						</li>
+						<li>
+							<a href="#">Denúncia!</a>
+						</li>
+					</ul>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li>
+		<div class="paper-piece" id="paper-footer">
+			<a href="#load-more" id="load-more">Mais</a>
+		</div>
+		</li>
+		
+		
+			
+		
+	</ul>
+	<div style="height:300px;"></div>
+	<a href="#top">Subir</a>
+	
+	
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
+	<script src="scripts/ajax.mock.js" type="text/javascript"></script>
+	<script src="scripts/poostagram.js" type="text/javascript"></script>
+
+</body>
+</html>

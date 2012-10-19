@@ -1,12 +1,22 @@
+		
+
 	var express = require('express');
 	var storage = require('./s3');
 	var fs = require('fs');
 	var app = express();
+
 	var poost = require('./repository');
 	app.use(express.bodyParser({uploadDir:'./temp_poo'}));
+
+
+	app.engine('.html', require('jade').renderFile);
+	
+	app.configure(function() {
+	    app.use(express.static('../ui/'));
+	});
 	
 	app.get('/',function(req,res){
-		res.render("index.html");
+		res.render('../ui/html/index.html');
 	});
 
 	app.get('/list/{poostDay}/{poostSequence}',function(req,res){
@@ -50,4 +60,5 @@
 			if (err) throw err;
 		});
 	});
-	app.listen(80);
+	app.listen(801);
+
