@@ -6,7 +6,7 @@
 	var app = express();
 
 	var poost = require('./repository');
-	app.use(express.bodyParser({uploadDir:'../ui'}));
+	app.use(express.bodyParser({uploadDir:'../ui/temp/'}));
 
 
 	app.engine('.html', require('jade').renderFile);
@@ -40,25 +40,32 @@
 	});
 
 	app.post('/upload',function(req,res,next){
-		
-		if(req.files.maybeAPooImage.size > 700000){ 
+
+		if(req.files.poo.size > 700000){ 
 			res.json(400, {error : 'Ooops, file too big! Help us, poost a image less than 700000kb'});
 		}
 		else{	
-			fs.readFile(req.files.maybeAPooImage.path,function(error,bufferData){
+			fs.readFile(req.files.poo.path,function(error,bufferData){
 				var buffer = new Buffer(bufferData);
 				poost.it(req.body.artist,req.body.masterpiece,function(ex,id){
 					storage.save(id.toString(),buffer,function(err,data){
+					
+						if(err){
+							res.json(400, 
+								{
+									error : 'Ooops!!'
+								});
+						}
+					
 						res.json(200, {message : 'Okay, your poop was uploaded..thanks for share!'});
 					});
 				});
 			});
 		}
 		
-		var tempPath = req.files.maybeAPooImage.path;
+		var tempPath = req.files.poo.path;
 		fs.unlink(tempPath, function(err) {
 			if (err) throw err;
 		});
 	});
 	app.listen(80);
-
