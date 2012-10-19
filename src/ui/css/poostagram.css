@@ -4,11 +4,11 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 body{
  margin:0;
  padding:0;
- background: url(../../images/bg.png) repeat fixed;
+ background: url(../images/bg.png) repeat fixed;
  font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-#logo { width:500px; height:71px; background:url(../../images/poostagram.png) no-repeat; margin: 0 auto;}
+#logo { width:500px; height:71px; background:url(../images/poostagram.png) no-repeat; margin: 0 auto;}
 
 #upload-form {
 	margin:  0 auto;
