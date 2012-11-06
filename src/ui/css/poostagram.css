@@ -6,6 +6,7 @@ body{
  padding:0;
  background: url(../images/bg.png) repeat fixed;
  font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+ font-size: 12px;
 }
 
 #logo { width:500px; height:71px; background:url(../images/poostagram.png) no-repeat; margin: 0 auto;}
@@ -67,6 +68,12 @@ body{
 	padding-bottom: 30px;
 }
 
+.paper-piece.first{ 
+	/* corrige o bug do efeito de inercia do osx */
+	height: 600px;
+	margin-top:-660px;
+}
+
 .paper-piece h1{
 	font-size: 18px;
 }
@@ -83,28 +90,34 @@ body{
 
 
 .photo{
-	width: 350px;
+	width: 400px;
 	margin: 0px auto 3px;
 	position: relative;
 	text-align: center;
 }
 
 .photo:hover .photo-buttons{
-/*	display: block;*/
+	display: block;
 }
 
 .photo-buttons{
-	background-color: #fff;
 	display: none;
-	height: 35px;
+	height: 87px;
 	width: 100%;
 	position:absolute;
 	bottom: 0;
+	background: url(../images/plunger.png) no-repeat right top;
 }
 
-.photo-buttons a,
-.photo-buttons ul{
+.photo-buttons a{
 	float: right;
+	margin: 35px 45px 35px 35px;
+	text-decoration: none;
+	color: #333;
+}
+
+.photo-buttons a:hover{
+	text-decoration: underline;
 }
 
 .photo-buttons li{

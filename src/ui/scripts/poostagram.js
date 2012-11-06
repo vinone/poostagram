@@ -48,16 +48,15 @@ function loadMorePoos(){
 	
 			for (var item in poos) {
 
-					toAppend[i++] = '<li poostId="';
-					toAppend[i++] = poos[item].id;
-					toAppend[i++] = '"><div class="paper-piece"><h1>';
-					toAppend[i++] = poos[item].title;
-					toAppend[i++] = '</h1><h2>';
-					toAppend[i++] = poos[item].author;
-					toAppend[i++] = '</h2><div class="photo"><img src="';
-					toAppend[i++] = poos[item].src;
-					toAppend[i++] = '" /><div class="photo-buttons"><ul><li><a href="#">Não é cocô!</a></li>';
-					toAppend[i++] = '<li><a href="#">Denúncia!</a></li></ul></div></div></div></li>';
+				toAppend[i++] = '<li poostId="';
+				toAppend[i++] = poos[item].id;
+				toAppend[i++] = '"><div class="paper-piece"><h1>';
+				toAppend[i++] = poos[item].title;
+				toAppend[i++] = '</h1><h2>';
+				toAppend[i++] = poos[item].author;
+				toAppend[i++] = '</h2><div class="photo"><img src="';
+				toAppend[i++] = poos[item].src;
+				toAppend[i++] = '" /><div class="photo-buttons"><a href="#">Não é cocô!</a></div></div></div></li>';
 
 			}
 	
