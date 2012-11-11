@@ -11,22 +11,23 @@ var storage = (function(){
 	  , bucket: 'poostes'
 	});
 	
+	var headers = {
+	  'Content-Type': 'image/jpg',
+	  'x-amz-acl' :'public-read'
+	};
 	
 	return {
 	
 		save:function(id,buffer,callback){
 			
-			var headers = {
-			  'Content-Type': 'image/jpg',
-			  'x-amz-acl' :'public-read'
-			};
-			
 			client.putBuffer(buffer, id+'.jpg', headers, function(err, res){
 			  	callback(err,res);
 			});
 		
+		},
+		delete:function(id){
+			client.del(id + '.jpg',headers);
 		}
-	
 	}
 
 })();

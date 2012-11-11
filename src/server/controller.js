@@ -5,7 +5,9 @@
 	var fs = require('fs');
 	var app = express();
 
-	var poost = require('./repository');
+	var poost = require('./poostesRepository');
+	var denounces = require('./denouncesRepository');
+	
 	app.use(express.bodyParser({uploadDir:'../ui/temp/'}));
 
 
@@ -38,7 +40,23 @@
 			res.json(response);
 		});
 	});
-
+	
+	app.post('/notPool',function(req,res,next){
+		
+		denounces.save(req.body.poostDay,req.body.poostSequence,function(err,data){
+		
+			if(data>=20){
+				poost.delete(req.body.poostDay,req.body.poostSequence,function(err){
+					storage.delete(req.body.poostDay.toString()+req.body.poostSequence.toString());
+				})
+			}
+			
+		
+			res.json(200, {message : 'Thanks! Have we talked about ' + data + ' times that not a pool'});
+		});
+		
+	});
+	
 	app.post('/upload',function(req,res,next){
 
 		if(req.files.poo.size > 700000){ 

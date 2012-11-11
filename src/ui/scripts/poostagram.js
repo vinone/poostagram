@@ -75,8 +75,11 @@ function loadMorePoos(){
 
 }
 
-
-
+$.ajaxSetup({
+  error:function(xhr,status,code){
+  		alert(xhr.responseText);
+  }
+});
 
 $(document).ready(function(){	
 	
@@ -88,21 +91,10 @@ $(document).ready(function(){
 	    $(this).resizeImage();
 	});
 	
+	$('#upload-form').ajaxForm(function(data){
+		 alert(data.message);
+	});	
 	
-	$('#input-right').click(function(){
-	
-		$.post('upload', { 
-					artist: $('input[name="artist"]').val(), 
-					masterpiece: $('input[name="masterpiece"]').val(),
-					poo: $('input[name="poo"]').val()
-					}, function(data) {
-		  alert('Sua obra foi poostada!');
-		});
-	
-	});
-
-
-
 //	$(window).scroll(function () { 
 //	    
 //	    $('#output').text("You've scrolled " + $(window).scrollTop() + " pixels");

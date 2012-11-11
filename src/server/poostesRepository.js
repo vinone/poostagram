@@ -42,9 +42,14 @@ var poost = (function(){
 				});			
 			});
 		},
+		delete:function(poostDay,poostSequence,callback){
+			 db
+			.remove(tableName,{poostDay:day,poostSequence:poostSequence})
+			.save(function(err){
+				callback(err);
+			});
+		},
 		get:function(day,count,currentCount,callback){
-			
-			
 			
 			if(day===null){
 				day = getCurrentId();
@@ -61,7 +66,6 @@ var poost = (function(){
 			.fetch(function(err,data){
 				callback(err,data);
 			});
-		
 		}
 	}
 })()
