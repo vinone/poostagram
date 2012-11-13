@@ -8,17 +8,17 @@
 	var poost = require('./poostesRepository');
 	var denounces = require('./denouncesRepository');
 	
-	app.use(express.bodyParser({uploadDir:'../ui/temp/'}));
+	app.use(express.bodyParser({uploadDir:'ui/temp/'}));
 
 
 	app.engine('.html', require('jade').renderFile);
 	
 	app.configure(function() {
-	    app.use(express.static('../ui/'));
+	    app.use(express.static('ui/'));
 	});
 	
 	app.get('/',function(req,res){
-		res.render('../ui/html/index.html');
+		res.render('ui/html/index.html');
 	});
 
 	app.get('/list/{poostDay}/{poostSequence}',function(req,res){
@@ -86,4 +86,6 @@
 			if (err) throw err;
 		});
 	});
-	app.listen(8080);
+	
+	var port =  process.env.PORT || 3000;
+		app.listen(port);
