@@ -102,6 +102,10 @@ a:active {text-decoration: none;color: #333;}
 	color:#532a14;
 }
 
+#paper-footer.loading{
+	opacity: 0.5; cursor: wait;
+}
+
 #paper-footer:hover {
 	background-position: 0 0;
 	color:#999;
@@ -116,6 +120,14 @@ a:active {text-decoration: none;color: #333;}
 	text-align: center;
 }
 
+.photo.loading{
+	height: 200px;
+	background: url(../images/loader.gif) no-repeat center center;
+}
+.photo.loading img{
+	display: none;
+}
+
 .photo:hover .photo-buttons{
 	display: block;
 }
@@ -127,6 +139,7 @@ a:active {text-decoration: none;color: #333;}
 	position:absolute;
 	bottom: 0;
 	background: url(../images/plunger.png) no-repeat right top;
+	cursor: pointer;
 }
 
 .photo-buttons a{
@@ -164,15 +177,23 @@ div#header{
 .right {float:right;}
 
 
-#refresh {background: #eee url(../images/refresh.png);
+#refresh {
+	background: #eee url(../images/refresh.png);
 	color:#777;
 	display: block;
 	width: 400px;
 	margin:0 auto;
 	padding-top: 15px;
 	padding-bottom: 15px;
-	text-align:center;}
+	text-align:center;
+}
 
+#to-top{
+width: 100%; display: block; text-align: center; cursor: pointer; padding-top: 20px;
+}
+#to-top:hover{
+text-decoration: underline;
+}
 
 @media screen{
  body>div#header{

@@ -1,80 +1,77 @@
-<<<<<<< HEAD
-
-(function( $ ){
-
-  $.fn.resizeImage = function( options ) {  
-  
-    return this.each(function() {
-        var maxWidth = 350; // Max width for the image
-        var maxHeight = 350;    // Max height for the image
-        var ratio = 0;  // Used for aspect ratio
-        var width = $(this).width();    // Current image width
-        var height = $(this).height();  // Current image height
-
-        // Check if the current width is larger than the max
-        if(width > maxWidth){
-            ratio = maxWidth / width;   // get ratio for scaling image
-            $(this).css("width", maxWidth); // Set new width
-            $(this).css("height", height * ratio);  // Scale height based on ratio
-            height = height * ratio;    // Reset height to match scaled image
-            width = width * ratio;    // Reset width to match scaled image
-        }
-
-        // Check if current height is larger than max
-        if(height > maxHeight){
-            ratio = maxHeight / height; // get ratio for scaling image
-            $(this).css("height", maxHeight);   // Set new height
-            $(this).css("width", width * ratio);    // Scale width based on ratio
-            width = width * ratio;    // Reset width to match scaled image
-        }
-        
-        $(this).addClass('resized');
-        
-    });
-
-  };
-})( jQuery );
+/* resizeImage function */
+(function(a){a.fn.resizeImage=function(b){var d=350;var c=350;return this.each(function(){var g=0;var f=a(this).width();var e=a(this).height();if(f>d){g=d/f;a(this).css("width",d);a(this).css("height",e*g);e=e*g;f=f*g}if(e>c){g=c/e;a(this).css("height",c);a(this).css("width",f*g);f=f*g}})}})(jQuery);
 
 
-
-
-
-function loadMorePoos(){
-
-	var lastPooId = 1;
-	var toAppend = [];
-	var i = 0;
-	
-	poostagram.getMorePoos(lastPooId, function(poos){
-	
-			for (var item in poos) {
-
-				toAppend[i++] = '<li poostId="';
-				toAppend[i++] = poos[item].id;
-				toAppend[i++] = '"><div class="paper-piece"><h1>';
-				toAppend[i++] = poos[item].title;
-				toAppend[i++] = '</h1><h2>';
-				toAppend[i++] = poos[item].author;
-				toAppend[i++] = '</h2><div class="photo"><img src="';
-				toAppend[i++] = poos[item].src;
-				toAppend[i++] = '" /><div class="photo-buttons"><a href="#">Não é cocô!</a></div></div></div></li>';
-
+var paperPanel = (function(){
+    	
+    function getPooContainer(id, title, author, src){
+    	return $('<li />', {'poostId': id }).append(
+					$('<div />', {'class':'paper-piece'}).html(
+						'<h1>' + title + '</h1><h2>' + author + '</h2><div class="photo loading"><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>'));
+    }
+    
+	return{
+		hidePoo: function(poo){
+			poo.slideUp(500);
+		},
+		loadOldPoos: function(){
+			var footer = $('#paper-footer');
+			
+			if (!footer.hasClass('loading')){
+				var lastPooId = 1;
+				var toAppend = [];
+				var i = 0;
+				footer.addClass('loading');
+				poostagram.getMorePoos(lastPooId, function(poos){
+				
+					for (var item in poos) {
+						var paperPiece = getPooContainer(poos[item].id, poos[item].title, poos[item].author, poos[item].src);
+						$('#load-more').before(paperPiece);
+						paperPiece.find('img').load(function(){
+							$(this).closest('.photo').removeClass('loading');
+							$(this).resizeImage();
+						});
+						paperPiece.find('.not-poo').click(function(){
+							paperPanel.hidePoo($(this).closest('li'));
+						});
+					}
+					footer.removeClass('loading');
+				});
 			}
-	
-			$('#toilet-paper').append(toAppend.join(''));
+		},
+		loadNewPoos: function(){
+			var footer = $('#paper-footer');
 			
-			$('.photo img:not(resized)').each(function() {
-			    $(this).resizeImage();
-			});
-			
-			$('#toilet-paper').append($('#paper-footer'));
-			
-			//window.scrollTo(0, document.body.scrollHeight);
-			
-	
-	});
+			if (!footer.hasClass('loading')){
+				var lastPooId = 1;
+				var toAppend = [];
+				var i = 0;
+				footer.addClass('loading');
+				poostagram.getMorePoos(lastPooId, function(poos){
+				
+					for (var item in poos) {
+						var paperPiece = getPooContainer(poos[item].id, poos[item].title, poos[item].author, poos[item].src);
+						$('#refresh').after(paperPiece);
+						paperPiece.find('img').load(function(){
+							$(this).closest('.photo').removeClass('loading');
+							$(this).resizeImage();
+						});
+						paperPiece.find('.not-poo').click(function(){
+							paperPanel.hidePoo($(this).closest('li'));
+						});
+					}
+					footer.removeClass('loading');
+					
+					$("html, body").animate({ scrollTop: 0 }, "slow");
+					
+				});
+			}
+		},
+	};
 
-}
+})();
+
+
 
 $.ajaxSetup({
   error:function(xhr,status,code){
@@ -84,17 +81,24 @@ $.ajaxSetup({
 
 $(document).ready(function(){	
 	
+	paperPanel.loadOldPoos();
+	
 	$('#load-more').click(function(){
-		loadMorePoos();
+		paperPanel.loadOldPoos();
 	});
 	
-	$('.photo img:not(resized)').each(function() {
-	    $(this).resizeImage();
-	});
+	$('#refresh').click(function(){
+		paperPanel.loadNewPoos();
+	})
 	
 	$('#upload-form').ajaxForm(function(data){
 		 alert(data.message);
 	});	
+	
+	$('#to-top').click(function(){
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+	})
+
 	
 //	$(window).scroll(function () { 
 //	    
@@ -106,123 +110,6 @@ $(document).ready(function(){
 //	
 
 
-=======
-
-(function( $ ){
-
-  $.fn.resizeImage = function( options ) {  
-  
-    return this.each(function() {
-        var maxWidth = 350; // Max width for the image
-        var maxHeight = 350;    // Max height for the image
-        var ratio = 0;  // Used for aspect ratio
-        var width = $(this).width();    // Current image width
-        var height = $(this).height();  // Current image height
-
-        // Check if the current width is larger than the max
-        if(width > maxWidth){
-            ratio = maxWidth / width;   // get ratio for scaling image
-            $(this).css("width", maxWidth); // Set new width
-            $(this).css("height", height * ratio);  // Scale height based on ratio
-            height = height * ratio;    // Reset height to match scaled image
-            width = width * ratio;    // Reset width to match scaled image
-        }
-
-        // Check if current height is larger than max
-        if(height > maxHeight){
-            ratio = maxHeight / height; // get ratio for scaling image
-            $(this).css("height", maxHeight);   // Set new height
-            $(this).css("width", width * ratio);    // Scale width based on ratio
-            width = width * ratio;    // Reset width to match scaled image
-        }
-        
-        $(this).addClass('resized');
-        
-    });
-
-  };
-})( jQuery );
 
 
-
-
-
-function loadMorePoos(){
-
-	var lastPooId = 1;
-	var toAppend = [];
-	var i = 0;
-	
-	poostagram.getMorePoos(lastPooId, function(poos){
-	
-			for (var item in poos) {
-
-				toAppend[i++] = '<li poostId="';
-				toAppend[i++] = poos[item].id;
-				toAppend[i++] = '"><div class="paper-piece"><h1>';
-				toAppend[i++] = poos[item].title;
-				toAppend[i++] = '</h1><h2>';
-				toAppend[i++] = poos[item].author;
-				toAppend[i++] = '</h2><div class="photo"><img src="';
-				toAppend[i++] = poos[item].src;
-				toAppend[i++] = '" /><div class="photo-buttons"><a href="#">Não é cocô!</a></div></div></div></li>';
-
-			}
-	
-			$('#toilet-paper').append(toAppend.join(''));
-			
-			$('.photo img:not(resized)').each(function() {
-			    $(this).resizeImage();
-			});
-			
-			$('#toilet-paper').append($('#paper-footer'));
-			
-			//window.scrollTo(0, document.body.scrollHeight);
-			
-	
-	});
-
-}
-
-$.ajaxSetup({
-  error:function(xhr,status,code){
-  		alert(xhr.responseText);
-  }
-});
-
-
-$('#refresh').click(function(){
-
-		$('#refresh').hide();
-		$('#refresh').slideDown("slow");
-});
-
-$(document).ready(function(){	
-	
-	$('#refresh').hide();
-	$('#refresh').slideDown("slow");
-	
-	$('#load-more').click(function(){
-		loadMorePoos();
-	});
-	
-	$('.photo img:not(resized)').each(function() {
-	    $(this).resizeImage();
-	});
-	
-	$('#upload-form').ajaxForm(function(data){
-		 alert(data.message);
-	});	
-	
-//	$(window).scroll(function () { 
-//	    
-//	    $('#output').text("You've scrolled " + $(window).scrollTop() + " pixels");
-//	    
-//	    $('#paper').css('background-position-y', $(window).scrollTop());
-//	    
-//	});
-//	
-
-
->>>>>>> interface
 });
