@@ -11,6 +11,29 @@ var paperPanel = (function(){
     }
     
 	return{
+		submitPoo: function(callback){
+			$('#submit-loading').show();
+			$("#upload-form").hide().submit(function() {                                                                       
+			        var data = $(this).serialize();
+			        $.post({
+			        	url: this.action,
+			            data: data,
+			            success: function()
+		                {
+		                	$('#submit-loading').hide();
+		                	$("#upload-form").show();
+		                	alert('Poostado com sucesso!');
+		                },
+		                error:function(XMLHttpRequest, textStatus, errorThrown)
+		                {
+		                    $('#submit-loading').hide();
+		                    $("#upload-form").show();
+		                    alert('Alguma cagada aconteceu no momento da poostagem!');
+		                }
+			        });
+			        return false; 
+			});
+		},
 		hidePoo: function(poo){
 			poo.slideUp(500);
 		},
@@ -91,8 +114,8 @@ $(document).ready(function(){
 		paperPanel.loadNewPoos();
 	})
 	
-	$('#upload-form').ajaxForm(function(data){
-		 alert(data.message);
+	$('#input-right input').click(function(){
+		 paperPanel.submitPoo();
 	});	
 	
 	$('#to-top').click(function(){
