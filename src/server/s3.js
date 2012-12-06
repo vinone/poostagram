@@ -4,7 +4,7 @@ var storage = (function(){
 	var credentials = require('./credentials');
 	var knox = require('knox');
 	
-	
+
 	var client = knox.createClient({
 	    key: credentials.accessKey
 	  , secret: credentials.secretKey

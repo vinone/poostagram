@@ -18,7 +18,7 @@
 	});
 	
 	app.get('/',function(req,res){
-		res.render('ui/html/index.html');
+		res.render('ui/index.html');
 	});
 
 	app.get('/list/{poostDay}/{poostSequence}',function(req,res){
@@ -52,7 +52,7 @@
 			}
 			
 		
-			res.json(200, {message : 'Thanks! Have we talked about ' + data + ' times that not a pool'});
+			res.json(200, {message : 'Thanks! Have we talked about ' + data + ' times that not a poo!'});
 		});
 		
 	});
