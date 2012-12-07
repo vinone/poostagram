@@ -9,7 +9,7 @@
     <div id="header"> 
         <a href="index.html"><div id="logo" alt="Poostagram" title="'cause shit happens"></div></a>
         <div id="submit-loading" style="display: none;"></div>
-        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data" onsubmit="return paperPanel.validateForm()">
          <p>Orgulhoso da sua criação?</p>   
             <div id="input-left">
             <input type="text" name="masterpiece" onclick="this.value=='Titulo da obra'?this.value='':this.value==this.value;"  onfocus="this.select()" onblur="this.value=!this.value?'Titulo da obra':this.value;" value="Titulo da obra"/>

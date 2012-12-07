@@ -11,8 +11,29 @@ var paperPanel = (function(){
     }
     
 	return{
-		validaForm: function(){
-			return false;
+		validateForm: function(){
+			var masterpiece = $('input[name="masterpiece"]');
+			var artist = $('input[name="artist"]');
+			var poo = $('input[name="poo"]');
+			var valid = true;
+			
+			if ($.trim(poo.val() == ''))
+			{
+				alert('Escolha uma obra de arte para enviar!');
+				poo.focus();
+				valid = false;
+			}
+			else if ($.trim(marterpiece.val() == ''){
+				alert('Uma grande obra deve ter um grande nome!');
+				masterpiece.focus();
+				valid = false;
+			}
+			else if ($.trim(artist.val() == ''){
+				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
+				artist.focus();
+				valid = false;
+			}
+			return valid;
 		},
 		hidePoo: function(poo){
 			poo.slideUp(500);
