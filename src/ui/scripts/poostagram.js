@@ -17,18 +17,18 @@ var paperPanel = (function(){
 			var poo = $('input[name="poo"]');
 			var valid = true;
 			
-			if ($.trim(poo.val() == ''))
+			if ($.trim(poo.val()) == '')
 			{
 				alert('Escolha uma obra de arte para enviar!');
 				poo.focus();
 				valid = false;
 			}
-			else if ($.trim(marterpiece.val() == ''){
+			else if ($.trim(marterpiece.val()) == ''){
 				alert('Uma grande obra deve ter um grande nome!');
 				masterpiece.focus();
 				valid = false;
 			}
-			else if ($.trim(artist.val() == ''){
+			else if ($.trim(artist.val()) == ''){
 				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
 				artist.focus();
 				valid = false;
