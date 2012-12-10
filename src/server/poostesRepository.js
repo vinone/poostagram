@@ -28,7 +28,7 @@ var poost = (function(){
 		
 	return {
 		
-		it:function(artist,masterPiece,callback){	
+		it:function(artist,masterPiece,ipAddress,callback){	
 			getNextSequence(function(sequence){
 				db
 				.put(tableName,{
@@ -36,6 +36,7 @@ var poost = (function(){
 								  	poostSequence:sequence,
 								  	artist:artist,
 								  	masterPiece:masterPiece,
+								  	ip: ipAddress,
 								  	date:today.toUTCString()})
 				.save(function(err){
 					callback(err,parseInt(getCurrentId().toString() + sequence.toString()));				
