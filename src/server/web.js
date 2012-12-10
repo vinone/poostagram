@@ -34,7 +34,8 @@
 						artist: poost.artist,
 						masterpiece: poost.masterPiece,
 						poostDay:poost.poostDay.toString(),
-						poostSequence:poost.poostDay.toString()});		
+						poostSequence:poost.poostDay.toString()
+					});		
 			};
 
 			res.json(response);
@@ -65,7 +66,9 @@
 		else{	
 			fs.readFile(req.files.poo.path,function(error,bufferData){
 				var buffer = new Buffer(bufferData);
-				poost.it(req.body.artist,req.body.masterpiece,function(ex,id){
+				var ipAddress = req.header('x-forwarded-for') || req.connection.remoteAddress;
+				console.log(ipAddress);
+				poost.it(req.body.artist,req.body.masterpiece,ipAddress,function(ex,id){
 					storage.save(id.toString(),buffer,function(err,data){
 					
 						if(err){
