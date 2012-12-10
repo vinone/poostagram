@@ -23,12 +23,12 @@ var paperPanel = (function(){
 				poo.focus();
 				valid = false;
 			}
-			else if ($.trim(marterpiece.val()) == ''){
+			else if ($(masterpiece).val() == ''){
 				alert('Uma grande obra deve ter um grande nome!');
 				masterpiece.focus();
 				valid = false;
 			}
-			else if ($.trim(artist.val()) == ''){
+			else if ($(artist).val() == ''){
 				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
 				artist.focus();
 				valid = false;
