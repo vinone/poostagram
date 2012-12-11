@@ -1,5 +1,3 @@
-		
-
 	var express = require('express');
 	var storage = require('./s3');
 	var fs = require('fs');
@@ -9,7 +7,6 @@
 	var denounces = require('./denouncesRepository');
 	
 	app.use(express.bodyParser({uploadDir:'ui/temp/'}));
-
 
 	app.engine('.html', require('jade').renderFile);
 	
@@ -21,9 +18,15 @@
 		res.render('ui/index.html');
 	});
 
-	app.get('/list/{poostDay}/{poostSequence}',function(req,res){
-		poost.get(req.poostDay,20,req.poostSequence,function(err,data){
+	app.get('/list',function(req,res){
 	
+		var pooDay = req.poostDay==null? null : req.poostDay;
+		var pooSequence = req.poostSequence==null? 0 : req.poostSequence;
+
+		poost.get(pooDay,20,pooSequence,function(err,data){
+			
+
+			
 			var response = new Array();
 			
 			for(item in data){
@@ -42,7 +45,7 @@
 		});
 	});
 	
-	app.post('/notPool',function(req,res,next){
+	app.post('/noPoo',function(req,res,next){
 		
 		denounces.save(req.body.poostDay,req.body.poostSequence,function(err,data){
 		

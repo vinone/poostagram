@@ -4,6 +4,7 @@ var poostagram = (function(){
     	
 	return{
 		getMorePoos: function(lastPooId, callback){
+			/*
 			var x = setTimeout(function(){
 				callback([
 					{ id: 1, title: 'MA QUE Bosta!', author: 'mario', src: 'images/poos/e.jpg' },
@@ -12,6 +13,10 @@ var poostagram = (function(){
 					{ id: 3, title: 'Robinho', author: 'Victor', src: 'images/poos/b.jpg' }
 				]);
 			}, 1000)
+			*/
+			$.getJSON('list',function(data){
+				return callback(data);
+			});
 		},
 		getMessage:function(callback){
 			var x = setTimeout(function () {

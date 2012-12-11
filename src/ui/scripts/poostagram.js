@@ -9,50 +9,100 @@ var paperPanel = (function(){
 					$('<div />', {'class':'paper-piece'}).html(
 						'<h1>' + title + '</h1><h2>' + author + '</h2><div class="photo loading"><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>'));
     }
+	
+	var inputTextMasterPiece = $('input[name="masterpiece"]');
+	var inputTextMasterPieceDefaultText = "Titulo da obra";
+	
+	var inputTextArtist = $('input[name="artist"]');
+	var inputTextArtistDefaultText = "Nome do artista";
+	
+    var inputTypeSubmit = $('input[type="submit"]');
+    var pooFile = $('input[name="poo"]');
     
-    masterPiece = {
-    	val:function(){
-    		var valInputMasterPiece = $('input[name="masterpiece"]').val();
+    
+    inputMasterPiece = {
+    
+    	val:function(value){
     		
-    		if(valInputMasterPiece=='Titulo da obra'){
+    		if(value){
+    			inputTextMasterPiece.val(value);
+    			return;
+    		}
+    			
+    		if(inputTextMasterPiece.val()==inputTextMasterPieceDefaultText){
     			return "";
     		}
-    		return trim(valInputMasterPiece);
+    		return $.trim(inputTextMasterPiece.val());
+    	},
+    	focus:function(){
+    		inputTextMasterPiece.focus();
     	}
-    }
+    };
     
-    artist = {
-    	val:function(){
-    		var valInputArist = $('input[name="artist"]').val();
-    		
-    		if(valInputArist=='Nome do artista'){
+    inputArtist = {
+
+    	val:function(value){
+			
+			if(value){
+				inputTextArtist.val(value);
+				return;
+			}
+			
+    		if(inputTextArtist.val()==inputTextArtistDefaultText){
     			return "";
     		}
-    		return trim(valInputArist);
+    		return $.trim(inputTextArtist.val());
+    	},
+    	focus:function(){
+    		inputTextArtist.focus();
     	}
+    };
+    
+    inputSubmit = {
+    	enabled:function(){
+    		inputTypeSubmit.attr('disabled',null);
+    	},
+    	disabled:function(){
+    		inputTypeSubmit.attr('disabled','true');
+    	},
+    	visible:function(){
+    		inputTypeSubmit.show();
+    	},
+    	hide:function(){
+    		inputTypeSubmit.hide();
+    	}
+    	
     }
     
 	return{
+		readyToNewPost:function(){
+			inputSubmit.visible();
+			pooFile.val(null);
+			inputMasterPiece.val(inputTextMasterPieceDefaultText);
+			inputArtist.val(inputTextArtistDefaultText);
+			
+		},
+		lockedToNewPost:function(){
+			inputSubmit.hide();	
+		},
 		validateForm: function(){
-			var masterpiece = $('input[name="masterpiece"]');
-			var artist = $('input[name="artist"]');
-			var poo = $('input[name="poo"]');
+			
 			var valid = true;
 			
-			if ($.trim(poo.val()) == '')
+			if ($.trim(pooFile.val()) == '')
 			{
 				alert('Escolha uma obra de arte para enviar!');
-				poo.focus();
+				pooFile.focus();
 				valid = false;
 			}
-			else if (masterPiece.val()== ''){
+			else if (inputMasterPiece.val()== ''){
 				alert('Uma grande obra deve ter um grande nome!');
-				masterpiece.focus();
+				inputMasterPiece.focus();
 				valid = false;
 			}
-			else if (artist.val() == ''){
+			else if (inputArtist.val() == ''){
 				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
-				artist.focus();
+				inputArtist.focus();
 				valid = false;
 			}
 			return valid;
@@ -137,9 +187,21 @@ $(document).ready(function(){
 		paperPanel.loadNewPoos();
 	})
 	
-	$('#upload-form').ajaxForm(function(data){
-		 alert(data.message);
-	});	
+	var ajaxFormOptions = {
+		beforeSubmit:function(){
+			var validated = paperPanel.validateForm();
+			if(validated){
+				paperPanel.lockedToNewPost();
+			}
+			return validated;
+		},
+		success:function(data){
+		 	alert(data.message);
+		 	paperPanel.readyToNewPost();
+		}
+	};
+	
+	$('#upload-form').ajaxForm(ajaxFormOptions);
 	
 	$('#to-top').click(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");

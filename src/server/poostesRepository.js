@@ -51,11 +51,13 @@ var poost = (function(){
 			});
 		},
 		get:function(day,count,currentCount,callback){
-			
+
 			if(day===null){
 				day = getCurrentId();
 			};
-			
+			console.log(day);
+			console.log(currentCount);
+			console.log(currentCount+count);
 			db
 			.get(tableName)
 			.query({poostDay:day, 
@@ -65,6 +67,7 @@ var poost = (function(){
 				})
 			.get('poostDay','poostSequence','artist','masterPiece','date')
 			.fetch(function(err,data){
+				console.log(err);
 				callback(err,data);
 			});
 		}
