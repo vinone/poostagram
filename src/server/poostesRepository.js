@@ -55,14 +55,20 @@ var poost = (function(){
 			if(day===null){
 				day = getCurrentId();
 			};
+			
+			var maxItens = parseInt(currentCount+count);
+			var current = parseInt(currentCount);
+			var day = parseInt(day);
+			
+			console.log(maxItens);
+			console.log(current);
 			console.log(day);
-			console.log(currentCount);
-			console.log(currentCount+count);
+			
 			db
 			.get(tableName)
 			.query({poostDay:day, 
 				poostSequence:{
-					'>=':[currentCount,(currentCount+count)]
+					'>=':[current,maxItens]
 					}
 				})
 			.get('poostDay','poostSequence','artist','masterPiece','date')

@@ -17,32 +17,39 @@
 	app.get('/',function(req,res){
 		res.render('ui/index.html');
 	});
-
-	app.get('/list',function(req,res){
 	
-		var pooDay = req.poostDay==null? null : req.poostDay;
-		var pooSequence = req.poostSequence==null? 0 : req.poostSequence;
+	function getPoo(req,res,pooDay,pooSequence){
 
 		poost.get(pooDay,20,pooSequence,function(err,data){
-			
-
-			
+						
 			var response = new Array();
 			
 			for(item in data){
 				var poost = data[item];
 				var id = poost.poostDay.toString() + poost.poostSequence.toString() + '.jpg';
 
-				response.push({url: '<img src="https://s3.amazonaws.com/poostes/' + id + '"',
+				response.push({url: 'https://s3.amazonaws.com/poostes/' + id,
 						artist: poost.artist,
-						masterpiece: poost.masterPiece,
+						masterPiece: poost.masterPiece,
 						poostDay:poost.poostDay.toString(),
-						poostSequence:poost.poostDay.toString()
+						poostSequence:poost.poostSequence.toString()
 					});		
 			};
 
 			res.json(response);
 		});
+	}
+	
+	app.get('/list/:poostDay/:poostSequence',function(req,res){
+
+		var poostDay = (req.params.poostDay);
+		var poostSequence = (req.params.poostSequence);
+		
+		getPoo(req,res,poostDay,poostSequence);
+	});
+	
+	app.get('/list',function(req,res){
+		getPoo(req,res,null,0);
 	});
 	
 	app.post('/noPoo',function(req,res,next){
