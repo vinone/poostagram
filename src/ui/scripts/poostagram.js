@@ -10,6 +10,28 @@ var paperPanel = (function(){
 						'<h1>' + title + '</h1><h2>' + author + '</h2><div class="photo loading"><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>'));
     }
     
+    masterPiece = {
+    	val:function(){
+    		var valInputMasterPiece = $('input[name="masterpiece"]').val();
+    		
+    		if(valInputMasterPiece=='Titulo da obra'){
+    			return "";
+    		}
+    		return trim(valInputMasterPiece);
+    	}
+    }
+    
+    artist = {
+    	val:function(){
+    		var valInputArist = $('input[name="artist"]').val();
+    		
+    		if(valInputArist=='Nome do artista'){
+    			return "";
+    		}
+    		return trim(valInputArist);
+    	}
+    }
+    
 	return{
 		validateForm: function(){
 			var masterpiece = $('input[name="masterpiece"]');
@@ -23,12 +45,12 @@ var paperPanel = (function(){
 				poo.focus();
 				valid = false;
 			}
-			else if ($.trim(marterpiece.val()) == ''){
+			else if (masterPiece.val()== ''){
 				alert('Uma grande obra deve ter um grande nome!');
 				masterpiece.focus();
 				valid = false;
 			}
-			else if ($.trim(artist.val()) == ''){
+			else if (artist.val() == ''){
 				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
 				artist.focus();
 				valid = false;
