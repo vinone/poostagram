@@ -5,7 +5,6 @@ var poost = (function(){
 	var tableName = 'poostes';
 	var today = new Date();    	
 	
-	
 	function getCurrentId(){
 		var day = today.getUTCDate().toString();
 		var month = (today.getUTCMonth()+1).toString();
@@ -24,6 +23,34 @@ var poost = (function(){
 								.fetch(function(err,count){
 									callback(count+1);
 								});		
+	}
+	
+	var countItens = function(poostDay,callback){
+		var countPoostesDay = db.get(tableName)
+								.query({poostDay: parseInt(poostDay)})
+								.count()
+								.fetch(function(err,count){
+									callback(count);
+								});		
+	}
+	
+	var getPoos = function(day,count,sequence,callback){
+	
+			var firstItem = parseInt(sequence) - parseInt(count);
+			var lastItem = parseInt(sequence);
+			var day = parseInt(day);
+			
+			db
+			.get(tableName)
+			.query({poostDay:day, 
+				poostSequence:{
+					'>=':[firstItem,lastItem]
+					}
+				})
+			.get('poostDay','poostSequence','artist','masterPiece','date')
+			.fetch(function(err,data){
+				callback(err,data);
+			});
 	}
 		
 	return {
@@ -55,27 +82,14 @@ var poost = (function(){
 			if(day===null){
 				day = getCurrentId();
 			};
-			
-			var maxItens = parseInt(currentCount+count);
-			var current = parseInt(currentCount);
-			var day = parseInt(day);
-			
-			console.log(maxItens);
-			console.log(current);
-			console.log(day);
-			
-			db
-			.get(tableName)
-			.query({poostDay:day, 
-				poostSequence:{
-					'>=':[current,maxItens]
-					}
-				})
-			.get('poostDay','poostSequence','artist','masterPiece','date')
-			.fetch(function(err,data){
-				console.log(err);
-				callback(err,data);
-			});
+			if(currentCount===null){
+				countItens(day,function(data){
+					getPoos(day,count,data,callback);
+				});
+			}
+			else{
+				getPoos(day,count,currentCount,callback);
+			}
 		}
 	}
 })()

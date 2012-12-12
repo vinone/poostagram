@@ -121,9 +121,12 @@ var paperPanel = (function(){
 				poostagram.getMorePoos(lastPooId, function(poos){
 				
 					for (var item in poos) {
-						var paperPiece = getPooContainer(poos[item].poostDay,
+						var paperPiece = getPooContainer(
+							poos[item].poostDay,
 							poos[item].poostSequence,
-							 poos[item].masterPiece, poos[item].artist, poos[item].url);
+							poos[item].masterPiece, 
+							poos[item].artist, 
+							poos[item].url);
 						$('#load-more').before(paperPiece);
 						paperPiece.find('img').load(function(){
 							$(this).closest('.photo').removeClass('loading');
@@ -148,7 +151,12 @@ var paperPanel = (function(){
 				poostagram.getMorePoos(lastPooId, function(poos){
 				
 					for (var item in poos) {
-						var paperPiece = getPooContainer(poos[item].id, poos[item].title, poos[item].author, poos[item].src);
+						var paperPiece = getPooContainer(
+							poos[item].poostDay,
+							poos[item].poostSequence,
+							poos[item].masterPiece, 
+							poos[item].artist, 
+							poos[item].url);
 						$('#refresh').after(paperPiece);
 						paperPiece.find('img').load(function(){
 							$(this).closest('.photo').removeClass('loading');
@@ -200,6 +208,7 @@ $(document).ready(function(){
 		success:function(data){
 		 	alert(data.message);
 		 	paperPanel.readyToNewPost();
+			paperPanel.loadOldPoos();
 		}
 	};
 	

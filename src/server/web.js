@@ -23,7 +23,7 @@
 		poost.get(pooDay,20,pooSequence,function(err,data){
 						
 			var response = new Array();
-			
+			data = data.reverse();
 			for(item in data){
 				var poost = data[item];
 				var id = poost.poostDay.toString() + poost.poostSequence.toString() + '.jpg';
@@ -48,8 +48,14 @@
 		getPoo(req,res,poostDay,poostSequence);
 	});
 	
+	app.get('/list/:poostDay',function(req,res){
+	
+			var poostDay = (req.params.poostDay);
+			getPoo(req,res,poostDay,null);
+	});
+	
 	app.get('/list',function(req,res){
-		getPoo(req,res,null,0);
+		getPoo(req,res,null,null);
 	});
 	
 	app.post('/noPoo',function(req,res,next){
@@ -77,7 +83,6 @@
 			fs.readFile(req.files.poo.path,function(error,bufferData){
 				var buffer = new Buffer(bufferData);
 				var ipAddress = req.header('x-forwarded-for') || req.connection.remoteAddress;
-				console.log(ipAddress);
 				poost.it(req.body.artist,req.body.masterpiece,ipAddress,function(ex,id){
 					storage.save(id.toString(),buffer,function(err,data){
 					
