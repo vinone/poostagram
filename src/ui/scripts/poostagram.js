@@ -2,6 +2,7 @@
 (function(a){a.fn.resizeImage=function(b){var d=350;var c=350;return this.each(function(){var g=0;var f=a(this).width();var e=a(this).height();if(f>d){g=d/f;a(this).css("width",d);a(this).css("height",e*g);e=e*g;f=f*g}if(e>c){g=c/e;a(this).css("height",c);a(this).css("width",f*g);f=f*g}})}})(jQuery);
 
 
+  
 var paperPanel = (function(){
     	
     function getPooContainer(id,sequence, title, author, src){
@@ -75,6 +76,22 @@ var paperPanel = (function(){
     }
     
 	return{
+		insertNewPoo:function(id,sequence, title, author, src){
+			var paperPiece = getPooContainer(
+				id,
+				sequence,
+				title, 
+				author, 
+				src);
+			$('#refresh').after(paperPiece);
+			paperPiece.find('img').load(function(){
+				$(this).closest('.photo').removeClass('loading');
+				$(this).resizeImage();
+			});
+			paperPiece.find('.not-poo').click(function(){
+				paperPanel.hidePoo($(this).closest('li'));
+			});
+		},
 		readyToNewPost:function(){
 			inputSubmit.visible();
 			pooFile.val(null);
@@ -185,7 +202,20 @@ $.ajaxSetup({
   }
 });
 
+var socket = io.connect('/');
+	socket.on('newPoo', function (data) {
+	
+		paperPanel.insertNewPoo(
+			data.poostDay,
+			data.poostSequence,
+			data.masterPiece, 
+			data.artist, 
+			data.url);
+	});
+
 $(document).ready(function(){	
+	
+	
 	
 	paperPanel.loadOldPoos();
 	
@@ -208,7 +238,6 @@ $(document).ready(function(){
 		success:function(data){
 		 	alert(data.message);
 		 	paperPanel.readyToNewPost();
-			paperPanel.loadOldPoos();
 		}
 	};
 	

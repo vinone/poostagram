@@ -66,7 +66,8 @@ var poost = (function(){
 								  	ip: ipAddress,
 								  	date:today.toUTCString()})
 				.save(function(err){
-					callback(err,parseInt(getCurrentId().toString() + sequence.toString()));				
+					var id = parseInt(getCurrentId().toString() + sequence.toString());
+					callback(err,id,getCurrentId().toString(),sequence.toString());				
 				});			
 			});
 		},
