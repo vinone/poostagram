@@ -153,6 +153,10 @@ var paperPanel = (function(){
 				});
 			}
 		},
+		failSubmit: function(){
+			inputSubmit.visible();
+			pooFile.val(null);
+		}
 	};
 
 })();
@@ -201,6 +205,10 @@ $(document).ready(function(){
 		success:function(data){
 		 	alert(data.message);
 		 	paperPanel.readyToNewPost();
+		},
+		error: function(xhr,status,code){
+			alert(xhr.responseText);
+			paperPanel.failSubmit();
 		}
 	};
 	
@@ -209,18 +217,5 @@ $(document).ready(function(){
 	$('#to-top').click(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	})
-
-	
-//	$(window).scroll(function () { 
-//	    
-//	    $('#output').text("You've scrolled " + $(window).scrollTop() + " pixels");
-//	    
-//	    $('#paper').css('background-position-y', $(window).scrollTop());
-//	    
-//	});
-//	
-
-
-
 
 });
