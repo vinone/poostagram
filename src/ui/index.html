@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Poostagram BETA</title>
-    <link href="css/poostagram.css" type="text/css" rel="stylesheet" />
-</head>
-<body>
-    <div id="header"> 
-        <a href="index.html"><div id="logo" alt="Poostagram" title="'cause shit happens"></div></a>
-        <div id="submit-loading" style="display: none;"></div>
-        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data" onsubmit="return paperPanel.validateForm()">
-         <p>Orgulhoso da sua criação?</p>   
-            <div id="input-left">
-            <input type="text" name="masterpiece" onclick="this.value=='Titulo da obra'?this.value='':this.value==this.value;"  onfocus="this.select()" onblur="this.value=!this.value?'Titulo da obra':this.value;" value="Titulo da obra"/>
-            <input type="text" name="artist" onclick="this.value=='Nome do artista'?this.value='':this.value==this.value;"  onfocus="this.select()" onblur="this.value=!this.value?'Nome do artista':this.value;" value="Nome do artista"/>
-            <input type="file" class="file" name="poo" /> 
-            </div><!--input-left-->
-            <div id="input-right"><input type="submit"  class="button"  value=""/></div>
-        </form>
-    </div>
-    <div id="content"> 
-    <div id="top" style="height:220px;"></div>
-    <ul id="toilet-paper">
-        <li>
-            <div class="paper-piece first">
+   <head>
+      <title>Poostagram</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      <style type="text/css">
+         .container{
+         margin-top: 60px;
+         }
+      </style>
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link href="css/poostagram.css" rel="stylesheet" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   </head>
+   <body>
+      <div class="container-fluid">
+         <div class="row-fluid visible-phone">
+            <div class="span12">
+               <div class="logo"></div>
             </div>
-        </li>
-		<a href="#" id="refresh"></a>
-       	 <a href="#load-more" id="load-more" alt="carregar mais" class="loading">
-            <div class="paper-piece" id="paper-footer">
+         </div>
+         <div class="row-fluid">
+            <div class="span4"></div>
+            <div class="span4 fixed-box">
+               <div class="hidden-phone" style="height:100px ;"></div>
+               <form id="upload-form" method='POST' action='upload'>
+                  <fieldset>
+                     <legend>Orgulhoso da criação?</legend>
+                     <label>Título da obra</label>
+                     <input type="text" name="masterpiece" placeholder="Merece um t&iacute;tulo &agrave; altura&hellip;" />
+                     <label>Nome do artista</label>
+                     <input type="text" name="artist" placeholder="Deixe a timidez de lado&hellip;" />
+                     <label>Upload...</label>
+                     <input type="file" name="poo" />
+                     
+                     
+                     <button type="submit" class="btn">POOST!</button>
+                  </fieldset>
+               </form>
+               <div class="alert">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>Atenção!</strong> As imagens devem ter no máximo 300Kb.
+               </div>
             </div>
-       	 </a>
-        </li>
-    </ul>
-	<a id="to-top">desenrolar</a>
-    <div style="height:300px;"></div>
-    
-    <script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
-    <script src="http://malsup.github.com/jquery.form.js" type="text/javascript"></script>
-    <script src="scripts/socket.io.min.js"></script>
-    <script src="scripts/ajax.js" type="text/javascript"></script>
-    <script src="scripts/poostagram.js" type="text/javascript"></script>
-</body>
+            <div class="span8" id="roll">
+               <div class="paper paper-new visible-phone">
+                  <div class="spinner"></div>
+                  <br />
+                  <a id="#new-poos-phone">Carregar novas</a>
+               </div>
+               <div class="paper-roll hidden-phone">
+                  <div class="logo"></div>
+                  <div class="spinner"></div>
+                  <br />
+                  <a id="#new-poos">Carregar novas</a>
+               </div>
+               <div class="paper load-more">
+               	  <div class="spinner"></div>
+                  <br />
+                  <a id="old-poos">Carregar antigas</a>
+                  <br /><br />
+                  <a id="to-top">Desenrolar</a>
+                  <br />
+               </div>
+               <br /><br /><br /><br />
+            </div>
+         </div>
+      </div>
+      <script src="scripts/jquery-1.8.3.min.js"></script>
+      <script src="scripts/bootstrap.min.js"></script>
+	  <script src="scripts/jquery.form.js" type="text/javascript"></script>
+	  <script src="scripts/socket.io.min.js"></script>
+      <script src="scripts/ajax.js"></script>
+      <script src="scripts/poostagram.js"></script>
+   </body>
 </html>

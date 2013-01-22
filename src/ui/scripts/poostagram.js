@@ -6,59 +6,15 @@
 var paperPanel = (function(){
     	
     function getPooContainer(id,sequence, title, author, src){
-    	return $('<li />', {'poostId': id,'sequence':sequence }).append(
-					$('<div />', {'class':'paper-piece'}).html(
-						'<h1>' + title + '</h1><h2>' + author + '</h2><div class="photo loading"><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>'));
+    	return $('<div />', {'data-poost-id': id,'data-sequence':sequence, 'class':'paper'}).html(
+						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>');
     }
 	
-	var inputTextMasterPiece = $('input[name="masterpiece"]');
-	var inputTextMasterPieceDefaultText = "Titulo da obra";
-	
-	var inputTextArtist = $('input[name="artist"]');
-	var inputTextArtistDefaultText = "Nome do artista";
-	
+	var inputMasterPiece = $('input[name="masterpiece"]');
+	var inputArtist = $('input[name="artist"]');	
     var inputTypeSubmit = $('input[type="submit"]');
     var pooFile = $('input[name="poo"]');
-    
-    
-    inputMasterPiece = {
-    
-    	val:function(value){
-    		
-    		if(value){
-    			inputTextMasterPiece.val(value);
-    			return;
-    		}
-    			
-    		if(inputTextMasterPiece.val()==inputTextMasterPieceDefaultText){
-    			return "";
-    		}
-    		return $.trim(inputTextMasterPiece.val());
-    	},
-    	focus:function(){
-    		inputTextMasterPiece.focus();
-    	}
-    };
-    
-    inputArtist = {
 
-    	val:function(value){
-			
-			if(value){
-				inputTextArtist.val(value);
-				return;
-			}
-			
-    		if(inputTextArtist.val()==inputTextArtistDefaultText){
-    			return "";
-    		}
-    		return $.trim(inputTextArtist.val());
-    	},
-    	focus:function(){
-    		inputTextArtist.focus();
-    	}
-    };
-    
     inputSubmit = {
     	enabled:function(){
     		inputTypeSubmit.attr('disabled',null);
@@ -83,7 +39,7 @@ var paperPanel = (function(){
 				title, 
 				author, 
 				src);
-			$('#refresh').after(paperPiece);
+			$('#roll').find('.paper-roll').after(paperPiece);
 			paperPiece.find('img').load(function(){
 				$(this).closest('.photo').removeClass('loading');
 				$(this).resizeImage();
@@ -94,10 +50,7 @@ var paperPanel = (function(){
 		},
 		readyToNewPost:function(){
 			inputSubmit.visible();
-			pooFile.val(null);
-			inputMasterPiece.val(inputTextMasterPieceDefaultText);
-			inputArtist.val(inputTextArtistDefaultText);
-			
+			pooFile.val(null);			
 		},
 		lockedToNewPost:function(){
 			inputSubmit.hide();	
@@ -126,16 +79,27 @@ var paperPanel = (function(){
 		},
 		hidePoo: function(poo){
 			poo.slideUp(500);
+			
+			var pooDay = poo.attr('data-poost-id');
+			var pooSequence = poo.attr('data-sequence');
+			
+			
+			poostagram.denouncesPoo(pooDay, pooSequence, function (callback) {
+				alert(callback.message);
+			});
+			
 		},
 		loadOldPoos: function(){
-			var footer = $('#paper-footer');
+			var footer = $('#roll').find('.load-more, .paper-new');
+			var lastPoo = $('div.paper:not(.load-more, .paper-new)').last();
 			
 			if (!footer.hasClass('loading')){
-				var lastPooId = 1;
+				var lastPooDay = lastPoo.attr('data-poost-id');
+				var lastPooSequence = lastPoo.attr('data-sequence');
 				var toAppend = [];
 				var i = 0;
 				footer.addClass('loading');
-				poostagram.getMorePoos(lastPooId, function(poos){
+				poostagram.getOldPoos(lastPooDay, lastPooSequence, function(poos){
 				
 					for (var item in poos) {
 						var paperPiece = getPooContainer(
@@ -144,13 +108,13 @@ var paperPanel = (function(){
 							poos[item].masterPiece, 
 							poos[item].artist, 
 							poos[item].url);
-						$('#load-more').before(paperPiece);
+						$('#roll').find('.load-more').before(paperPiece);
 						paperPiece.find('img').load(function(){
 							$(this).closest('.photo').removeClass('loading');
 							$(this).resizeImage();
 						});
 						paperPiece.find('.not-poo').click(function(){
-							paperPanel.hidePoo($(this).closest('li'));
+							paperPanel.hidePoo($(this).closest('div.paper'));
 						});
 					}
 					footer.removeClass('loading');
@@ -158,14 +122,13 @@ var paperPanel = (function(){
 			}
 		},
 		loadNewPoos: function(){
-			var footer = $('#paper-footer');
+			var footer = $('#roll').find('.load-more, .paper-new');
 			
 			if (!footer.hasClass('loading')){
-				var lastPooId = 1;
 				var toAppend = [];
 				var i = 0;
 				footer.addClass('loading');
-				poostagram.getMorePoos(lastPooId, function(poos){
+				poostagram.getNewPoos( function(poos){
 				
 					for (var item in poos) {
 						var paperPiece = getPooContainer(
@@ -174,13 +137,13 @@ var paperPanel = (function(){
 							poos[item].masterPiece, 
 							poos[item].artist, 
 							poos[item].url);
-						$('#refresh').after(paperPiece);
+						$('#roll').find('.paper-roll').after(paperPiece);
 						paperPiece.find('img').load(function(){
 							$(this).closest('.photo').removeClass('loading');
 							$(this).resizeImage();
 						});
 						paperPiece.find('.not-poo').click(function(){
-							paperPanel.hidePoo($(this).closest('li'));
+							paperPanel.hidePoo($(this).closest('div.paper'));
 						});
 					}
 					footer.removeClass('loading');
@@ -217,13 +180,13 @@ $(document).ready(function(){
 	
 	
 	
-	paperPanel.loadOldPoos();
+	paperPanel.loadNewPoos();
 	
-	$('#load-more').click(function(){
+	$('#old-poos').click(function(){
 		paperPanel.loadOldPoos();
 	});
 	
-	$('#refresh').click(function(){
+	$('#new-poos, #new-poos-phone').click(function(){
 		paperPanel.loadNewPoos();
 	})
 	

@@ -33,7 +33,7 @@
 		poost.get(pooDay,20,pooSequence,function(err,data){
 						
 			var response = new Array();
-			if(data!=null){
+			if(data!=null && pooSequence!=null){
 				data = data.reverse();
 			}
 			for(item in data){
@@ -56,7 +56,7 @@
 	app.get('/list/:poostDay/:poostSequence',function(req,res){
 
 		var poostDay = (req.params.poostDay);
-		var poostSequence = (req.params.poostSequence);
+		var poostSequence = (req.params.poostSequence)-1;
 		
 		getPoo(req,res,poostDay,poostSequence);
 	});
