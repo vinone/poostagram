@@ -11,12 +11,16 @@ window.alert = function(msg){
 
 }
 
+function throwError(msg) {
+	var alertBootstrap = $('<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+	$('#upload-form').next(alertBootstrap);
+}
   
 var paperPanel = (function(){
     	
     function getPooContainer(id,sequence, title, author, src){
     	return $('<div />', {'data-poost-id': id,'data-sequence':sequence, 'class':'paper'}).html(
-						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Não é cocô!</a></div></div>');
+						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Not a poop!</a></div></div>');
     }
 	
 	var inputMasterPiece = $('input[name="masterpiece"]');
@@ -70,17 +74,17 @@ var paperPanel = (function(){
 			
 			if ($.trim(pooFile.val()) == '')
 			{
-				alert('Escolha uma obra de arte para enviar!');
+				throwError('Choose your masterpiece to send!');
 				pooFile.focus();
 				valid = false;
 			}
 			else if (inputMasterPiece.val()== ''){
-				alert('Uma grande obra deve ter um grande nome!');
+				throwError('A masterpiece should have a great name!');
 				inputMasterPiece.focus();
 				valid = false;
 			}
 			else if (inputArtist.val() == ''){
-				alert('Deixe a timidez de lado! Todos querem saber o nome do artista!');
+				throwError('Don\'t be shy! Everybody wants to know the artist\'s name!');
 				inputArtist.focus();
 				valid = false;
 			}
@@ -225,11 +229,6 @@ $(document).ready(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	})
 
-<<<<<<< HEAD
-});
-=======
-
 
 
 });
->>>>>>> Atualização interface e tradução parcial
