@@ -75,13 +75,15 @@
 		
 		denounces.save(req.body.poostDay,req.body.poostSequence,function(err,data){
 		
-			if(data>=20){
+			if(data>5){
 				poost.delete(req.body.poostDay,req.body.poostSequence,function(err){
 					storage.delete(req.body.poostDay.toString()+req.body.poostSequence.toString());
+					denounces.delete(req.body.poostDay,req.body.poostSequence,function(err,data){
+							
+					});
 				})
 			}
 			
-		
 			res.json(200, {message : 'Thanks! Have we talked about ' + data + ' times that not a poo!'});
 		});
 		

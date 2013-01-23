@@ -26,7 +26,8 @@ var storage = (function(){
 		
 		},
 		delete:function(id){
-			client.del(id + '.jpg',headers);
+			console.log(id);
+			client.deleteFile(id + '.jpg',headers,function(err){});
 		}
 	}
 

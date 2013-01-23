@@ -37,6 +37,11 @@ var poost = (function(){
 	var getPoos = function(day,count,sequence,callback){
 	
 			var firstItem = parseInt(sequence) - parseInt(count);
+			
+			if(firstItem<0){
+				firstItem = 0;
+			}
+			
 			var lastItem = parseInt(sequence);
 			var day = parseInt(day);
 			
@@ -72,11 +77,15 @@ var poost = (function(){
 			});
 		},
 		delete:function(poostDay,poostSequence,callback){
-			 db
-			.remove(tableName,{poostDay:day,poostSequence:poostSequence})
-			.save(function(err){
-				callback(err);
-			});
+			 var poo = db.get(tableName,{	
+										poostDay:parseInt(poostDay),
+										poostSequence:parseInt(poostSequence)
+									});
+			 poo.destroy(function(err,data){
+			 	callback(err,data);
+			 });
+			
+			
 		},
 		get:function(day,count,currentCount,callback){
 
