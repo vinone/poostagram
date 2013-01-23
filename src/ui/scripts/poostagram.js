@@ -2,6 +2,15 @@
 (function(a){a.fn.resizeImage=function(b){var d=350;var c=350;return this.each(function(){var g=0;var f=a(this).width();var e=a(this).height();if(f>d){g=d/f;a(this).css("width",d);a(this).css("height",e*g);e=e*g;f=f*g}if(e>c){g=c/e;a(this).css("height",c);a(this).css("width",f*g);f=f*g}})}})(jQuery);
 
 
+
+/* override alert */
+window.alert = function(msg){
+
+    var alertBootstrap = $('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
+    $('#upload-form').next(alertBootstrap);
+
+}
+
   
 var paperPanel = (function(){
     	
@@ -183,7 +192,6 @@ var socket = io.connect('/');
 $(document).ready(function(){	
 	
 	
-	
 	paperPanel.loadNewPoos();
 	
 	$('#old-poos').click(function(){
@@ -211,11 +219,17 @@ $(document).ready(function(){
 			paperPanel.failSubmit();
 		}
 	};
-	
 	$('#upload-form').ajaxForm(ajaxFormOptions);
 	
 	$('#to-top').click(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	})
 
+<<<<<<< HEAD
 });
+=======
+
+
+
+});
+>>>>>>> Atualização interface e tradução parcial

@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'bubbleboddyfat';
+    src: url('bobbleboddy-webfont.eot');
+    src: url('bobbleboddy-webfont.eot?#iefix') format('embedded-opentype'),
+         url('bobbleboddy-webfont.woff') format('woff'),
+         url('bobbleboddy-webfont.ttf') format('truetype'),
+         url('bobbleboddy-webfont.svg#bubbleboddyfat') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body{
 font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif; font-size: 75%;
 background: url(../images/bg.png) repeat fixed #9bd2e4; color: #333;
@@ -15,8 +27,24 @@ cursor: pointer;
 }
 
 .logo{
-width: 305px;height: 56px;margin: 0 auto;padding: 30px 0;
-background: url(../images/poostagram.png) no-repeat center;
+height: 56px;
+color: #42210b;
+text-shadow: 0 1px 0 #ffffff;
+font-size: 72px;
+font-family: 'bubbleboddyfat';
+padding-top: 50px;
+}
+
+.logo p{
+text-align: center;
+width: 100%;
+margin: 0;
+}
+
+.logo .slogan{
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size: 18px;
+margin-top: 30px;
 }
 
 .spinner{
@@ -34,6 +62,7 @@ background: url(../images/paper.png) repeat;
 .load-more{
 height: 123px; border-bottom: none;
 background: url(../images/load.png) no-repeat center top;
+padding-top: 10px;
 }
 .load-more.loading .spinner{
 height: 123px;
@@ -41,6 +70,11 @@ width: 64px;
 }
 .load-more.loading a{
 display: none;
+}
+
+#old-poos{
+width: 90%;
+margin: 0 auto;
 }
 
 /* load new poos */
@@ -118,6 +152,7 @@ text-decoration: underline;
 	}
 	.logo{
 	padding: 30px 0 0;
+	font-size: 60px;
 	}
 	.photo-buttons{
 	display: block;
