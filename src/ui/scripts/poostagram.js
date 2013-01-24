@@ -23,6 +23,8 @@ var paperPanel = (function(){
 						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Not a poop!</a></div></div>');
     }
 	
+	
+	
 	var inputMasterPiece = $('input[name="masterpiece"]');
 	var inputArtist = $('input[name="artist"]');	
     var inputTypeSubmit = $('input[type="submit"]');
@@ -78,12 +80,12 @@ var paperPanel = (function(){
 				pooFile.focus();
 				valid = false;
 			}
-			else if (inputMasterPiece.val()== ''){
+			else if (inputMasterPiece.val()== '' || inputMasterPiece.val()=='Give it a great name'){
 				throwError('A masterpiece should have a great name!');
 				inputMasterPiece.focus();
 				valid = false;
 			}
-			else if (inputArtist.val() == ''){
+			else if (inputArtist.val() == '' || inputArtist.val()=='Don/\'t be shy'){
 				throwError('Don\'t be shy! Everybody wants to know the artist\'s name!');
 				inputArtist.focus();
 				valid = false;
