@@ -5,10 +5,7 @@
 
 /* override alert */
 window.alert = function(msg){
-
-    var alertBootstrap = $('<div class="alert"><button type="button" class="close" data-dismiss="alert">&times;</button>' + msg + '</div>');
-    $('#upload-form').next(alertBootstrap);
-
+	$('#upload-form .message-receiver').append(msg);
 }
 
 function throwError(msg) {
@@ -27,7 +24,7 @@ var paperPanel = (function(){
 	
 	var inputMasterPiece = $('input[name="masterpiece"]');
 	var inputArtist = $('input[name="artist"]');	
-    var inputTypeSubmit = $('input[type="submit"]');
+    var inputTypeSubmit = $('#upload-form :button');
     var pooFile = $('input[name="poo"]');
 
     inputSubmit = {
@@ -43,7 +40,12 @@ var paperPanel = (function(){
     	hide:function(){
     		inputTypeSubmit.hide();
     	}
-    	
+    }
+
+    fileSubmit = {
+    	clean:function(){
+    		pooFile.val(null);
+    	}
     }
     
 	return{
@@ -64,11 +66,13 @@ var paperPanel = (function(){
 			});
 		},
 		readyToNewPost:function(){
-			inputSubmit.visible();
-			pooFile.val(null);			
+			fileSubmit.clean();
+			inputMasterPiece.val(null);
+			inputArtist.val(null);
+			inputSubmit.enabled();
 		},
 		lockedToNewPost:function(){
-			inputSubmit.hide();	
+			inputSubmit.disabled();
 		},
 		validateForm: function(){
 			
@@ -76,6 +80,7 @@ var paperPanel = (function(){
 			
 			if ($.trim(pooFile.val()) == '')
 			{
+				alert('Choose your masterpiece to send!');
 				throwError('Choose your masterpiece to send!');
 				pooFile.focus();
 				valid = false;
@@ -100,7 +105,7 @@ var paperPanel = (function(){
 			
 			
 			poostagram.denouncesPoo(pooDay, pooSequence, function (callback) {
-				alert(callback.message);
+				alert(notifier.notice(0,callback.message));
 			});
 			
 		},
@@ -168,14 +173,16 @@ var paperPanel = (function(){
 				});
 			}
 		},
-		failSubmit: function(){
-			inputSubmit.visible();
-			pooFile.val(null);
+		failSubmit: function(message){
+			alert(message);
+			$('#upload-form .alert-error').bind('closed',function(){
+				fileSubmit.clean();
+				inputSubmit.enabled();
+			});
 		}
 	};
 
 })();
-
 
 
 $.ajaxSetup({
@@ -194,6 +201,36 @@ var socket = io.connect('/');
 			data.artist, 
 			data.url);
 	});
+
+var notifier = (function(){
+
+	function decisor(code){
+		var custom;
+	    switch(code){
+		    case 200:	
+		        custom = "alert-success";
+		        break;
+		    case 400:
+		        custom = "alert-error";
+		        break;
+		    case 500:
+		        custom = "alert-error";
+		        break;
+		    default: 
+		    	custom = "alert-info";
+			break;
+		}
+		return custom;
+	}
+
+	return {
+			notice: function(code,message){
+				var element = '<div class="alert ' + decisor(code) + ' fade in">';
+				element += message + '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+				return element.toString();
+			}
+	};
+})();
 
 $(document).ready(function(){	
 	
@@ -217,20 +254,16 @@ $(document).ready(function(){
 			return validated;
 		},
 		success:function(data){
-		 	alert(data.message);
+		 	alert(notifier.notice(200,data.message));
 		 	paperPanel.readyToNewPost();
 		},
 		error: function(xhr,status,code){
-			alert(xhr.responseText);
-			paperPanel.failSubmit();
+			paperPanel.failSubmit(notifier.notice(xhr.status,xhr.responseText));
 		}
 	};
 	$('#upload-form').ajaxForm(ajaxFormOptions);
 	
 	$('#to-top').click(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");
-	})
-
-
-
+	});
 });

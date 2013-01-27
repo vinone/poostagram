@@ -90,9 +90,8 @@
 	});
 	
 	app.post('/upload',function(req,res,next){
-
 		if(req.files.poo.size > 700000){ 
-			res.json(400, {error : 'Ooops, file too big! Help us, poost a image less than 700000kb'});
+			res.json(400, 'Ooops, file too big! Help us, poost a image less than 700000kb');
 		}
 		else{	
 			fs.readFile(req.files.poo.path,function(error,bufferData){
@@ -109,7 +108,7 @@
 						}
 						
 						res.json(200, {message : 'Okay, your poop was uploaded..thanks for share!'});
-						
+						console.log('new poo created');
 						var newPoo = new pooResponse(id,
 						req.body.artist,
 						req.body.masterpiece,
