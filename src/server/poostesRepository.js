@@ -38,13 +38,14 @@ var poost = (function(){
 	
 			var firstItem = parseInt(sequence) - parseInt(count);
 			
+			
 			if(firstItem<0){
 				firstItem = 0;
 			}
 			
 			var lastItem = parseInt(sequence);
 			var day = parseInt(day);
-			
+
 			db
 			.get(tableName)
 			.query({poostDay:day, 
@@ -56,6 +57,16 @@ var poost = (function(){
 			.fetch(function(err,data){
 				callback(err,data);
 			});
+	}
+
+	var getAllPoos = function(count,callback){
+		db
+		.get(tableName)
+		.scan()
+		.get('poostDay','poostSequence','artist','masterPiece','date')
+		.fetch(function(err,data){
+			callback(err,data)
+		});
 	}
 		
 	return {
@@ -88,14 +99,15 @@ var poost = (function(){
 			
 		},
 		get:function(day,count,currentCount,callback){
-
 			if(day===null){
 				day = getCurrentId();
 			};
 			if(currentCount===null){
-				countItens(day,function(data){
-					getPoos(day,count,data,callback);
-				});
+				getAllPoos(day,callback);
+				//Ate revermos a paginação!
+				// countItens(day,function(data){
+				// 	getPoos(day,count,data,callback);
+				// });
 			}
 			else{
 				getPoos(day,count,currentCount,callback);

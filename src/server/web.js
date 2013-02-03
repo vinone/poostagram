@@ -25,13 +25,10 @@
 		this.masterPiece = masterPiece;
 		this.poostDay = pooDay;
 		this.poostSequence = pooSequence;
-	
 	}
-	
-	function getPoo(req,res,pooDay,pooSequence){
 
+	function getPoo(req,res,pooDay,pooSequence){
 		poost.get(pooDay,20,pooSequence,function(err,data){
-						
 			var response = new Array();
 			if(data!=null && pooSequence!=null){
 				data = data.reverse();
@@ -48,7 +45,6 @@
 				
 				response.push(pooItem);		
 			};
-
 			res.json(response);
 		});
 	}
@@ -57,7 +53,6 @@
 
 		var poostDay = (req.params.poostDay);
 		var poostSequence = (req.params.poostSequence)-1;
-		
 		getPoo(req,res,poostDay,poostSequence);
 	});
 	
