@@ -60,6 +60,8 @@ var poost = (function(){
 		
 	return {
 		
+		
+		
 		it:function(artist,masterPiece,ipAddress,callback){	
 			getNextSequence(function(sequence){
 				db

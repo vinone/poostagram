@@ -4,6 +4,11 @@
 	var app = express();
 	var poost = require('./poostesRepository');
 	var denounces = require('./denouncesRepository');
+	
+	var _poo = require('./poo');
+	var _maxItens = 20;
+	
+	
 	var s3Url = 'https://s3.amazonaws.com/poostes/';
 	
 	app.use(express.bodyParser({uploadDir:'ui/temp/'}));
@@ -36,6 +41,11 @@
 			if(data!=null && pooSequence!=null){
 				data = data.reverse();
 			}
+			
+			if(data===null){
+				getPoo(req,res,pooDay,pooSequence);
+			}
+			
 			for(item in data){
 				var poost = data[item];
 				var id = poost.poostDay.toString() + poost.poostSequence.toString();
@@ -68,7 +78,15 @@
 	});
 	
 	app.get('/list',function(req,res){
-		getPoo(req,res,null,null);
+	
+		_poo.get(_maxItens).all({
+			success:function(data){			
+				res.json(data);	
+			},
+			error:function(err){
+				res.json(400,err);
+			}
+		});
 	});
 	
 	app.post('/noPoo',function(req,res,next){
