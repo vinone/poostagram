@@ -19,12 +19,17 @@ var paperPanel = (function(){
     	
     	var _id = new String(id);
 
-    	var d = _id.substring(0,2);
-		var m = _id.substring(2,3);
-		var y = _id.substring(3,7);
-    	
+		if(_id.length===6){
+			var d = _id.substring(1,0);
+			var m = _id.substring(1,2);
+			var y = _id.substring(2,6);			
+		}else{
+    		var d = _id.substring(0,2);
+			var m = _id.substring(2,3);
+			var y = _id.substring(3,7);
+    	}
     	return $('<div />', {'data-poost-id': id,'data-sequence':sequence, 'class':'paper'}).html(
-						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><h6><i>Day ' + d + ' Month ' + m + ' year ' + y +'</i></h6></div>');
+						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><h6><i>Day <b>' + d + '</b> Month <b>' + m + '</b> year <b>' + y + '</b> </i></h6></div>');
     }
 	
 	

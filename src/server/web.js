@@ -31,7 +31,7 @@
 		poost.get(pooDay,20,pooSequence,function(err,data){
 			var response = new Array();
 			if(data!=null){
-				data = data.reverse();
+				//data = data.reverse();
 			}
 			for(item in data){
 				var poost = data[item];
