@@ -30,7 +30,7 @@
 	function getPoo(req,res,pooDay,pooSequence){
 		poost.get(pooDay,20,pooSequence,function(err,data){
 			var response = new Array();
-			if(data!=null && pooSequence!=null){
+			if(data!=null){
 				data = data.reverse();
 			}
 			for(item in data){

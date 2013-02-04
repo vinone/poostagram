@@ -16,8 +16,15 @@ function throwError(msg) {
 var paperPanel = (function(){
     	
     function getPooContainer(id,sequence, title, author, src){
+    	
+    	var _id = new String(id);
+
+    	var d = _id.substring(0,2);
+		var m = _id.substring(2,3);
+		var y = _id.substring(3,7);
+    	
     	return $('<div />', {'data-poost-id': id,'data-sequence':sequence, 'class':'paper'}).html(
-						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><div class="photo-buttons"><a class="not-poo">Not a poop!</a></div></div>');
+						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><h6><i>Day ' + d + ' Month ' + m + ' year ' + y +'</i></h6></div>');
     }
 	
 	
@@ -60,9 +67,6 @@ var paperPanel = (function(){
 			paperPiece.find('img').load(function(){
 				$(this).closest('.photo').removeClass('loading');
 				$(this).resizeImage();
-			});
-			paperPiece.find('.not-poo').click(function(){
-				paperPanel.hidePoo($(this).closest('li'));
 			});
 		},
 		readyToNewPost:function(){
