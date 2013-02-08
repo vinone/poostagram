@@ -1,3 +1,4 @@
+	var mime = require('mime');
 	var express = require('express');
 	var storage = require('./s3');
 	var fs = require('fs');
@@ -5,7 +6,7 @@
 	var poost = require('./poostesRepository');
 	var denounces = require('./denouncesRepository');
 	var s3Url = 'https://s3.amazonaws.com/poostes/';
-	
+
 	app.use(express.bodyParser({uploadDir:'ui/temp/'}));
 
 	app.engine('.html', require('jade').renderFile);
@@ -85,13 +86,23 @@
 	});
 	
 	app.post('/upload',function(req,res,next){
-		if(req.files.poo.size > 700000){ 
-			res.json(400, 'Ooops, file too big! Help us, poost a image less than 700000kb');
+	
+
+		var file = req.files.poo.path;
+		var mimeType = mime.lookup(req.files.poo.type); 
+		
+		
+		if(mimeType!=='image/jpeg'){
+			res.json(400, {message : 'Sorry, just JPEG files!'});
 		}
-		else{	
-			fs.readFile(req.files.poo.path,function(error,bufferData){
+		
+		else {
+		
+			fs.readFile(file,function(error,bufferData){
 				var buffer = new Buffer(bufferData);
 				var ipAddress = req.header('x-forwarded-for') || req.connection.remoteAddress;
+				
+				
 				poost.it(req.body.artist,req.body.masterpiece,ipAddress,function(ex,id,pooDay,pooSequence){
 					storage.save(id.toString(),buffer,function(err,data){
 					
