@@ -65,6 +65,14 @@ var poost = (function(){
 		.scan()
 		.get('poostDay','poostSequence','artist','masterPiece','date')
 		.fetch(function(err,data){
+		
+			data.sort(function(a,b){
+				var firstDate = new Date(a.date);
+				var lastDate = new Date(b.date);
+				
+				return firstDate > lastDate;
+			});
+			
 			callback(err,data)
 		});
 	}

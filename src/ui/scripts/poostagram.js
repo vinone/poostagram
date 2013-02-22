@@ -29,7 +29,7 @@ var paperPanel = (function(){
 			var y = _id.substring(3,7);
     	}
     	return $('<div />', {'data-poost-id': id,'data-sequence':sequence, 'class':'paper'}).html(
-						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><h6><i>Day <b>' + d + '</b> Month <b>' + m + '</b> year <b>' + y + '</b> </i></h6></div>');
+						'<div class="photo"><h1>' + title + '</h1><h2>' + author + '</h2><img src="' + src + '" /><h6><i> <b>' + m + '</b> / <b>' + d + '</b> / <b>' + y + '</b> </i></h6></div>');
     }
 	
 	

@@ -66,7 +66,7 @@
 	app.get('/list',function(req,res){
 		getPoo(req,res,null,null);
 	});
-	
+	/*
 	app.post('/noPoo',function(req,res,next){
 		
 		denounces.save(req.body.poostDay,req.body.poostSequence,function(err,data){
@@ -84,7 +84,7 @@
 		});
 		
 	});
-	
+	*/
 	app.post('/upload',function(req,res,next){
 	
 
